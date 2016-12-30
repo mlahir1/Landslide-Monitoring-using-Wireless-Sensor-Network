@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title>Land Slide Detection</title>
+		<meta name="description" content="Land Slide Detection" />
+		<meta name="keywords" content="Land Slide Detection" />
+		<meta name="author" content="Chetan Sai Kumar Thalisetty" />
+		<link rel="stylesheet" type="text/css" href="css/style1.css" />
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script>
+			function loadFile(){
+					MINOR_ALL = "01100";
+					MINOR_WEST ="01011";//left
+					MINOR_EAST = "00111";//right
+					MAJOR_ALL = "01111";
+					MAJOR_WEST = "01110";
+					MAJOR_EAST = "01101";
+					MINOR_2WEST= "01010";
+					MINOR_2EAST= "00101";
+					INFO_STR = "";
+					var xhr = new XMLHttpRequest();
+					xhr.withCredentials = true;
+					xhr.addEventListener("readystatechange", function (){
+					if (this.readyState == 4 && this.status == 200) {
+							jsonStr= this.responseText;
+							console.log(jsonStr);
+							VALUE =0;
+							switch (jsonStr) {
+								case MINOR_ALL:
+									INFO_STR = "MINOR - ALL SLIDE (NODES-1,2)";
+									VALUE = 1;
+									break;
+								case MINOR_2WEST:
+									INFO_STR = "MINOR - SLIDE WEST (NODES-1,3)";
+									VALUE =1;
+									break;
+								case MINOR_2EAST:
+									INFO_STR = "MINOR - SLIDE WEST (NODES-2,4)";
+									VALUE =1;
+									break;
+								case MINOR_WEST:
+									INFO_STR = "MINOR - SLIDE WEST (NODES-1,3,4)";
+									VALUE =1;
+									break; 
+								case MINOR_EAST:
+									INFO_STR = "MINOR - SLIDE EAST (NODES-2,3,4)";
+									VALUE =1;
+									break;
+								case MAJOR_ALL:
+									INFO_STR = "MAJOR - ALL SLIDE (NODES-1,2,3,4)";
+									VALUE =2;
+									break;
+								case MAJOR_WEST:
+									INFO_STR = "MAJOR - SLIDE WEST (NODES-1,2,3)";
+									VALUE =2;
+									break;
+								case MAJOR_EAST:
+									INFO_STR = "MAJOR - SLIDE EAST (NODES-1,2,4)";
+									VALUE = 2;
+									break;
+								default: 
+									INFO_STR = "NO SLIDE";
+									VALUE = 0;
+									break;
+							}
+							document.getElementById("infolabel").innerHTML = "Land Slide Detected : "+INFO_STR;
+							if(VALUE ==0){
+								document.getElementById("infolabel").style.color = 'green';
+							}else if(VALUE ==1){
+								document.getElementById("infolabel").style.color = 'orange';
+							}else if(VALUE ==2){
+								document.getElementById("infolabel").style.color = 'red';
+							}else{
+								document.getElementById("infolabel").style.color = 'black';
+							}
+					}
+					});      
+					try{
+						var locallink ="http://10.0.2.15:8888";
+						xhr.open("GET", locallink+"/land", true);
+						xhr.send();
+					}catch(e){
+						console.log(e);
+					}
+				}
+		</script>
+	</head>
+	<body>
+		<div class="container">	
+					
+			<header class="disasterfix">			
+				<h1>Land Slide Detection<span>using Wireless Sensor Networks</span></h1>	
+				
+			</header>
+			<section class="main disasterfix">
+				<div class="fleft">				
+					<h1 class="datavalue" id = "infolabel">Land Slide Detected : </h1>
+					<input type="button" class="button" value="Get Data" onclick="loadFile()">
+				</div>
+				
+			</section>
+			
+		</div><!-- /container -->
+	</body>
+</html>
