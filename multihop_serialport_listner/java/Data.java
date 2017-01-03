@@ -51,11 +51,8 @@ class Data {
         return -1;
     }
     int lahir = nodes[nodeId].getData(x);
-    System.out.println("Node Id: "+nodeId + ", Value: " + lahir);
+    //System.out.println("Node Id: "+nodeId + ", Value: " + lahir);
     
-    if(nodes[nodeId].getData(x) == -1){
-    	System.out.println("Node : "+nodeId + " Died :P");
-    }
     if(nodes[nodeId].getData(x) != -1){
       if(flag[nodeId] == 0){
         a[nodeId] = lahir;
@@ -71,9 +68,9 @@ class Data {
     int tot=0;
     for(int i = 0; i<5;i++){
        tot = detect[i]+tot;
-        //System.out.print(detect[i]+",");
+       System.out.print(detect[i]+",");
     }
-    //System.out.println();
+    System.out.println();
     if(ctr > 100){
       try{
        //OutputStream os = new FileOutputStream("test.txt");
@@ -82,16 +79,7 @@ class Data {
        PrintWriter os  = new PrintWriter("test.txt");
        for(int i = 0 ; i < 5; i++){
           os.print(detect[i]);
-       }/*
-      if(tot == 4){
-    	System.out.println(4);
-      }
-      else if(tot == 3){
-    	System.out.println(3);
-      }
-      else {
-    	System.out.println(0);
-      }*/
+       }
       os.flush();
       os.close();
       }catch (IOException e){}
